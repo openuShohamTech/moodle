@@ -54,7 +54,8 @@ if ($tool->status != ENROL_INSTANCE_ENABLED) {
 }
 
 $consumerkey = required_param('oauth_consumer_key', PARAM_TEXT);
-$ltiversion = optional_param('lti_version', null, PARAM_TEXT);
+$ltiversion = required_param('lti_version', PARAM_TEXT);//added by elisheval
+//$ltiversion = optional_param('lti_version', null, PARAM_TEXT);//commented by elisheval
 $messagetype = required_param('lti_message_type', PARAM_TEXT);
 
 // Only accept launch requests from this endpoint.
@@ -74,9 +75,9 @@ if ($ltiversion === \IMSGlobal\LTI\ToolProvider\ToolProvider::LTI_VERSION1) {
     $consumer->ltiVersion = \IMSGlobal\LTI\ToolProvider\ToolProvider::LTI_VERSION1;
     // For LTIv1, set the tool secret as the consumer secret.
     $consumer->secret = $tool->secret;
-    $consumer->name = optional_param('tool_consumer_instance_name', '', PARAM_TEXT);
+    $consumer->name = optional_param('tool_consumer_instance_name', 'openu', PARAM_TEXT);//changed default value from '' to openu
     $consumer->consumerName = $consumer->name;
-    $consumer->consumerGuid = optional_param('tool_consumer_instance_guid', null, PARAM_TEXT);
+    $consumer->consumerGuid = optional_param('tool_consumer_instance_guid', 'openu', PARAM_TEXT);//changed default value from null to openu
     $consumer->consumerVersion = optional_param('tool_consumer_info_version', null, PARAM_TEXT);
     $consumer->enabled = true;
     $consumer->protected = true;
